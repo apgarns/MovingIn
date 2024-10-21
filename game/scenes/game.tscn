@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://cf1244y0tmin8"]
 
-[ext_resource type="PackedScene" uid="uid://cfceo2fw6h848" path="res://scenes/player.tscn" id="1_q6n5v"]
+[ext_resource type="PackedScene" uid="uid://cfceo2fw6h848" path="res://scenes/player/player.tscn" id="2_3ac5n"]
 [ext_resource type="Texture2D" uid="uid://cvxxknna2ox86" path="res://assets/game/main_tileset_texture_a.png" id="2_xq4qy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_imtik"]
@@ -3143,7 +3143,4 @@ tile_map_data = PackedByteArray("AADz/wQAAAAAACQAAADz/wUAAAAAACUAAADy//j/AAAAACQ
 tile_set = SubResource("TileSet_4dwb3")
 collision_enabled = false
 
-[node name="Player" parent="." instance=ExtResource("1_q6n5v")]
-light_mask = 2
-z_index = 2
-position = Vector2(-7, -8)
+[node name="Player" parent="map" instance=ExtResource("2_3ac5n")]
