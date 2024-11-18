@@ -140,9 +140,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fernu"]
-radius = 7.0
-height = 20.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_abux8"]
+radius = 6.0
+height = 24.0
 
 [node name="Player" type="CharacterBody2D"]
 light_mask = 4
@@ -161,5 +161,6 @@ animation = &"RIGHT_1"
 autoplay = "RIGHT_1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -10)
-shape = SubResource("CapsuleShape2D_fernu")
+position = Vector2(1, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_abux8")

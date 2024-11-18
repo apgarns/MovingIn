@@ -1,8 +1,11 @@
-[gd_scene load_steps=19 format=4 uid="uid://cf1244y0tmin8"]
+[gd_scene load_steps=22 format=4 uid="uid://cf1244y0tmin8"]
 
 [ext_resource type="PackedScene" uid="uid://cfceo2fw6h848" path="res://scenes/player/player.tscn" id="2_3ac5n"]
 [ext_resource type="Texture2D" uid="uid://cxr0dkpe21al4" path="res://assets/game/sierrassets furniture pack/floors and walls/floor and walls spritesheet.png" id="2_7hc1o"]
 [ext_resource type="Texture2D" uid="uid://cvxxknna2ox86" path="res://assets/game/main_tileset_texture_a.png" id="2_xq4qy"]
+[ext_resource type="PackedScene" uid="uid://fd6jaojyegmc" path="res://scenes/Furnitures/Furniture_table.tscn" id="4_2lu2c"]
+[ext_resource type="PackedScene" uid="uid://2rkr88qiqj2j" path="res://scenes/Furnitures/furniture_monitor.tscn" id="4_l045l"]
+[ext_resource type="PackedScene" uid="uid://grdww1r1nru5" path="res://scenes/Furnitures/Furniture_vendingmachine.tscn" id="6_sra6q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_imtik"]
 texture = ExtResource("2_xq4qy")
@@ -3211,8 +3214,17 @@ tile_map_data = PackedByteArray("AADz/wQAAAAAACQAAADz/wUAAAAAACUAAADy//j/AAAAACQ
 tile_set = SubResource("TileSet_4dwb3")
 collision_enabled = false
 
-[node name="Player" parent="map" instance=ExtResource("2_3ac5n")]
+[node name="Player" parent="map" groups=["player"] instance=ExtResource("2_3ac5n")]
 visibility_layer = 7
+
+[node name="Furniture" parent="map" instance=ExtResource("4_2lu2c")]
+position = Vector2(43, 11)
+
+[node name="Furniture_monitor" parent="map" instance=ExtResource("4_l045l")]
+position = Vector2(81, 29)
+
+[node name="Furniture2" parent="map" instance=ExtResource("6_sra6q")]
+position = Vector2(-46, -94)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="map"]
 collision_mask = 2

@@ -2,27 +2,41 @@ extends CharacterBody2D
 
 const SPEED = 150.0
 
+var furniture_in_range = [] # nearby furniture objs
+var held_furniture = null # currently held furniture
+var facing_direction = Vector2(1, 0) # default to facing right
+
+func _ready():
+	for furniture in get_tree().get_nodes_in_group("furniture"):
+		furniture.connect("entered_range", Callable(self, "add_furniture_to_range"))
+		furniture.connect("exited_range", Callable(self, "remove_furniture_from_range"))
+
 func _process(delta):
 	var x_direction = 0
 	var y_direction = 0
 	
 	if Input.is_action_pressed("move_right"):
-		x_direction =+1
+		x_direction = 1
+		facing_direction = Vector2(1, 0)  # facing right
 		$AnimatedSprite2D.animation = "RIGHT_1"
-	if Input.is_action_pressed("move_left"):
-		x_direction =-1
-		$AnimatedSprite2D.animation = "LEFT"
-
 		
-	if Input.is_action_pressed("move_down"):
-		y_direction =+1
+	elif Input.is_action_pressed("move_left"):
+		x_direction = -1
+		facing_direction = Vector2(-1, 0)  # facing left
+		$AnimatedSprite2D.animation = "LEFT"
+		
+	elif Input.is_action_pressed("move_down"):
+		y_direction = 1
+		facing_direction = Vector2(0, 1)  # facing down
 		$AnimatedSprite2D.animation = "DOWN"
 
-	if Input.is_action_pressed("move_up"):
-		y_direction =-1
+	elif Input.is_action_pressed("move_up"):
+		y_direction = -1
+		facing_direction = Vector2(0, -1)  # facing up
 		$AnimatedSprite2D.animation = "UP"
 
-		
+	if Input.is_action_just_pressed("ui_pickup"):
+		attempt_pickup_or_drop()
 	
 	# Handle horizontal movement
 	if x_direction:
@@ -47,3 +61,49 @@ func _process(delta):
 
 	# Move the character
 	move_and_slide()
+	
+func attempt_pickup_or_drop():
+	if held_furniture:
+		# drop held furniture
+		held_furniture.drop()
+		held_furniture = null
+	else:
+		# find closest valid furniture to pick up
+		var closest_furniture = get_closest_furniture()
+		if closest_furniture:
+			closest_furniture.pickup(self)
+			held_furniture = closest_furniture
+
+func get_closest_furniture():
+	var closest = null
+	var min_distance = INF
+
+	for furniture in furniture_in_range:
+		if furniture.is_player_close and furniture.is_facing_furniture(self):
+			var distance = global_position.distance_to(furniture.global_position)
+			if distance < min_distance:
+				min_distance = distance
+				closest = furniture
+
+	return closest
+
+# called when furniture object enters range
+func add_furniture_to_range(furniture):
+	if furniture not in furniture_in_range:
+		furniture_in_range.append(furniture)
+
+# called when furniture object leaves range
+func remove_furniture_from_range(furniture):
+	furniture_in_range.erase(furniture)
+	
+func get_fixed_direction():
+	if facing_direction == Vector2(1, 0):
+		return "right"
+	elif facing_direction == Vector2(-1, 0):
+		return "left"
+	elif facing_direction == Vector2(0, -1):
+		return "up"
+	elif facing_direction == Vector2(0, 1):
+		return "down"
+	return "unknown"
+	
