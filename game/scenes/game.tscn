@@ -3197,21 +3197,6 @@ a = Vector2(0, -292)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_1xfi7")
 
-[node name="Countdown_UI" type="Label" parent="."]
-z_index = 10
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = -152.0
-offset_right = 21.0
-offset_bottom = -129.0
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Countdown_Timer" type="Timer" parent="."]
-autostart = true
-
 [node name="map" type="Node" parent="."]
 
 [node name="ground" type="TileMapLayer" parent="map"]
@@ -3285,5 +3270,3 @@ shape = SubResource("SegmentShape2D_g7rnv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="map/StaticBody2D"]
 position = Vector2(273, 132)
 shape = SubResource("SegmentShape2D_g3tk0")
-
-[connection signal="timeout" from="Countdown_Timer" to="." method="_on_CountdownTimer_timeout"]
