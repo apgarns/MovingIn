@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var sound: AudioStreamPlayer = $sound
+
 const SPEED = 150.0
 
 var furniture_in_range = [] # nearby furniture objs
@@ -67,12 +69,16 @@ func attempt_pickup_or_drop():
 		# drop held furniture
 		held_furniture.drop()
 		held_furniture = null
+		sound.play()
+		await sound.finished
 	else:
 		# find closest valid furniture to pick up
 		var closest_furniture = get_closest_furniture()
 		if closest_furniture:
 			closest_furniture.pickup(self)
+			sound.play()
 			held_furniture = closest_furniture
+			await sound.finished
 
 func get_closest_furniture():
 	var closest = null
@@ -107,3 +113,10 @@ func get_fixed_direction():
 		return "down"
 	return "unknown"
 	
+
+
+func _on_button_pressed():
+	print("menu pressed")
+	sound.play()
+	await sound.finished
+	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")

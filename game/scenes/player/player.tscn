@@ -1,10 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://cfceo2fw6h848"]
+[gd_scene load_steps=26 format=3 uid="uid://cfceo2fw6h848"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_2wadl"]
 [ext_resource type="Texture2D" uid="uid://c5sd7oivrmals" path="res://assets/sprites/DOWNDOWN.png" id="2_nw15h"]
 [ext_resource type="Script" path="res://scenes/player/label.gd" id="2_xqnhe"]
 [ext_resource type="Texture2D" uid="uid://b4xipr17vot1y" path="res://assets/sprites/UPUPUP.png" id="3_t5w2e"]
 [ext_resource type="Texture2D" uid="uid://18unc78qch6e" path="res://assets/sprites/LEFTRIGHT.png" id="3_yv2jg"]
+[ext_resource type="AudioStream" uid="uid://dbdg1a61f2x3x" path="res://assets/main_menu/menu_music.mp3" id="6_nv2bq"]
+[ext_resource type="AudioStream" uid="uid://bn683hartegc1" path="res://assets/main_menu/button_click2.mp3" id="7_wlc03"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0y3wh"]
 atlas = ExtResource("2_nw15h")
@@ -141,9 +143,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_abux8"]
-radius = 6.0
-height = 24.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hbo6w"]
+radius = 12.0
+height = 26.0
 
 [node name="Player" type="CharacterBody2D"]
 light_mask = 4
@@ -163,6 +165,13 @@ offset_right = 116.0
 offset_bottom = -66.0
 script = ExtResource("2_xqnhe")
 
+[node name="Button" type="Button" parent="Camera2D"]
+offset_left = 172.0
+offset_top = -149.0
+offset_right = 268.0
+offset_bottom = -118.0
+text = "Main Menu"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(4, -10)
 scale = Vector2(0.09, 0.09)
@@ -171,6 +180,17 @@ animation = &"RIGHT_1"
 autoplay = "RIGHT_1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, -1)
+position = Vector2(1, -9)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_abux8")
+shape = SubResource("CapsuleShape2D_hbo6w")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_nv2bq")
+volume_db = -15.261
+autoplay = true
+
+[node name="sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wlc03")
+volume_db = 1.418
+
+[connection signal="pressed" from="Camera2D/Button" to="." method="_on_button_pressed"]

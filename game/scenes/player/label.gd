@@ -11,3 +11,6 @@ func _process(delta: float):
 	else:
 		text = "Time's Up You FAILED!!!!!"
 		get_tree().paused = true
+		await get_tree().create_timer(5.0).timeout
+		hide()
+		print("5 seconds have passed!")
